@@ -25,13 +25,13 @@ To set a new key value pair
 SettingStore.set(:feature, value: 'Hello World')
 ```
 
-To retrieve a set value
+To retrieve a set key value
 ```
 SettingStore.get(:feature)
 => 'Hello World'
 ```
 
-To check if value of a specific key is truthy
+To check if value of a specific key value is truthy
 ```
 SettingStore.set(:simple_key, value: 'Random String')
 SettingStore.active?(:simple_key)
