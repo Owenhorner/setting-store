@@ -9,6 +9,12 @@ describe SettingStore do
     it "sets a value to store" do
       expect(SettingStore.set(:example, value: true)).to eq(true)
     end
+
+    context "with group" do
+      it "sets a value within a group" do
+        expect(SettingStore.set(:example, group: :user_group, value: 'hello')).to eq('hello')
+      end
+    end
   end
 
   describe "#get" do
@@ -19,6 +25,17 @@ describe SettingStore do
 
     it "gets nil for non-existent field" do
       expect(SettingStore.get(:no_example)).to eq(nil)
+    end
+
+    context "with group" do
+      it "gets a settings from the store" do
+        SettingStore.set(:get_example, group: :user_group, value: "hello")
+        expect(SettingStore.get(:get_example, group: :user_group)).to eq("hello")
+      end
+
+      it "gets nil for non-existent field" do
+        expect(SettingStore.get(:no_example, group: :user_group)).to eq(nil)
+      end
     end
   end
 

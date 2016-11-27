@@ -2,13 +2,13 @@ require "setting_store/version"
 require 'pstore'
 
 module SettingStore
-  def self.set(field, value: nil)
-    store = pstore
+  def self.set(field, group: nil, value: nil)
+    store = group ? group_pstore(group) : pstore
     store.transaction { store[field.to_sym] = value }
   end
 
-  def self.get(field)
-    store = pstore
+  def self.get(field, group: nil)
+    store = group ? group_pstore(group) : pstore
     store.transaction { store[field.to_sym] }
   end
 
@@ -17,6 +17,10 @@ module SettingStore
   end
 
   private
+
+  def self.group_pstore(group)
+    PStore.new(group.to_s + "_store.pstore")
+  end
 
   def self.pstore
     PStore.new(store_filename)
